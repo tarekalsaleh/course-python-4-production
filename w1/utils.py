@@ -112,7 +112,14 @@ class DataReader:
         }
         """
     ######################################## YOUR CODE HERE ##################################################
+        with open(self._fp) as f:
+            next(f)
 
+            for line in f:
+                line = line.rstrip()
+                fields = line.split(self._sep)
+                row = {col: val for col, val in zip(self._col_names, fields)}
+                yield row
     ######################################## YOUR CODE HERE ##################################################
 
     def get_file_path(self):

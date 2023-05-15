@@ -44,7 +44,21 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
     }
     """
     ######################################## YOUR CODE HERE ##################################################
+    dp_gen = (row for row in dp.data_reader)
+    _ = next(dp_gen)
 
+    revenue_by_region = {}
+    for row in dp_gen:
+        country = row["Country"]
+        revenue = round(float(row["TotalPrice"]),2)
+        if country in revenue_by_region:
+            revenue_by_region[country] += revenue
+        else:
+            revenue_by_region[country] = revenue
+    return revenue_by_region
+
+
+        
     ######################################## YOUR CODE HERE ##################################################
 
 
