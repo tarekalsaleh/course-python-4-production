@@ -1,4 +1,3 @@
-
 # import the sqlite3 package
 import sqlite3
 from datetime import datetime
@@ -45,6 +44,20 @@ class DB:
         Read more about datatypes in Sqlite here -> https://www.sqlite.org/datatype3.html
         """
     ######################################## YOUR CODE HERE ##################################################
+        query = f''' 
+            CREATE TABLE IF NOT EXISTS {self._table_name}
+                 (
+                     process_id TEXT NOT NULL,
+                     file_name TEXT DEFAULT NULL,
+                     file_path TEXT NOT NULL,
+                     description TEXT DEFAULT NULL,
+                     start_time TEXT NOT NULL,
+                     end_time TEXT DEFAULT NULL,
+                     percentage REAL DEFAULT NULL
+                 )    
+        '''
+        self._connection.execute(query)
+        self._connection.commit()
 
     ######################################## YOUR CODE HERE ##################################################
 
@@ -63,6 +76,12 @@ class DB:
         :return: None
         """
     ######################################## YOUR CODE HERE ##################################################
+        query = f'''
+            INSERT INTO {self._table_name} (process_id, start_time, file_name, file_path, description, end_time, percentage)
+            VALUES ('{process_id}','{start_time}', '{file_name}', '{file_path}', '{description}', '{end_time}', '{percentage}')
+        ''' 
+        self._connection.execute(query)
+        self._connection.commit()
 
     ######################################## YOUR CODE HERE ##################################################
 
@@ -95,7 +114,8 @@ class DB:
         :return: None
         """
     ######################################## YOUR CODE HERE ##################################################
+        self._connection.execute(f'''UPDATE {self._table_name} SET percentage='{percentage}'
+                                     WHERE process_id='{process_id}';''')
 
+        self._connection.commit()
     ######################################## YOUR CODE HERE ##################################################
-
-
